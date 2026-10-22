@@ -48,7 +48,7 @@ All data access goes through `src/lib/services/` — async functions such as `ge
 | `storage.ts`     | localStorage adapter, keys, validation, simulated 200–500 ms delay           |
 | `errors.ts`      | `ServiceError` and the user-facing error message helper                      |
 
-Current mock keys: `fitency:auth`, `fitency:data:<userId>:habits`, and `fitency:data:<userId>:completions`. The theme preference is UI state stored separately under `fitency-theme` and is not part of the data service.
+Current mock keys: `fitency:auth`, `fitency:data:<userId>:habits`, and `fitency:data:<userId>:completions`. The theme preference is UI state stored separately under `fitency-theme` (Light or Dark only, starting in Light; legacy `system` values are migrated once to an explicit theme) and is not part of the data service.
 
 To plug in a real backend, replace only the service functions; their signatures and the `Habit`, `Completion`, and `User` types in `src/lib/types.ts` are the seam. Nothing else in the app needs to change.
 

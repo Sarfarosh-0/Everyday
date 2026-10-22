@@ -58,7 +58,7 @@ Rules:
 ### 3.2 Habits page (Add / Edit Habit)
 **Habits page (the tab):**
 - List of all habits. Each shows icon, name, and weekday chips, with **Edit** and **Delete** actions.
-- Prominent **"+ New habit"** button.
+- Fixed **floating action button (FAB)** in the bottom-right with a plus icon and an accessible "New habit" label; it stays visible while scrolling and clears the mobile tab bar.
 - Empty state: "No habits yet" with a call to action.
 
 **Habit form** (shared for add and edit; full screen on mobile, modal on desktop):
@@ -84,7 +84,7 @@ Explicitly NOT in MVP: "most consistent day" insight, per-habit detail/drill-dow
 ### 3.4 Account
 1. **Profile card:** avatar (initials fallback), name, email.
 2. **Edit name** (inline or small form).
-3. **Appearance:** theme toggle **Light / Dark / System**.
+3. **Appearance:** theme toggle **Light / Dark**.
 4. **Log out** button.
 5. **Delete account** in a danger zone, with a confirm dialog.
 
@@ -114,7 +114,7 @@ Not in MVP: week-start-day setting (Monday is the default).
 - **Accent color:** **energetic orange.** Green is reserved to mean "completed" (success). The exact hex is not decided; the PRD may suggest one (for example a vibrant orange around `#F97316`) and mark it as a suggestion.
 - **Fonts:** **Roboto Condensed** for headings and numbers/stats; regular **Roboto** for body text, labels, and small text.
 - **Shape language:** **soft and rounded** (rounded cards, soft shadows, clear hierarchy).
-- **Theming:** **light + dark mode**, with dark as **soft charcoal** (not true black). Use **CSS-variable color tokens** from the start. Theme options: Light / Dark / System.
+- **Theming:** **light + dark mode**, with dark as **soft charcoal** (not true black). Use **CSS-variable color tokens** from the start. Theme options: **Light / Dark** only. A new install starts in Light. The choice is stored under `fitency-theme`; legacy `system` values are resolved once to an explicit theme.
 - **Icons:** `lucide-react` for UI icons, plus the preset fitness icon set for habits.
 - **Charts:** simple, readable, color-coded.
 - **Accessibility:** semantic HTML, WCAG AA contrast in both themes, full keyboard support, ARIA labels on icon buttons and charts, visible focus rings, respect for reduced-motion.

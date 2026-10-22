@@ -98,7 +98,7 @@ Use the *feel* of a simple, bold, minimal habit app: habits shown as round, colo
 - Define all colors as **CSS variables (tokens)** so light and dark themes share the same component code.
 
 ### Theming
-- **Light and dark mode**, with options **Light / Dark / System**.
+- **Light and dark mode**, with options **Light / Dark** only (no System option). A new install starts in Light.
 - Dark mode uses **soft charcoal** backgrounds, not true black.
 - No flash of the wrong theme on load.
 
@@ -168,7 +168,7 @@ Simple, readable, and color-coded. Never rely on color alone to convey meaning.
 
 **Habits list (the tab):**
 - List of all habits. Each row shows the **icon, name, and weekday chips**, with **Edit** and **Delete** actions.
-- A prominent **"+ New habit"** button.
+- A fixed **floating action button (FAB)** in the bottom-right with a plus icon and an accessible "New habit" label. It stays visible while scrolling, clears the mobile tab bar, and appears only on the Habits page.
 - **Empty state:** "No habits yet" with a call to action to create one.
 
 **Habit form** (one shared form for add and edit; full screen on mobile, modal on desktop):
@@ -212,7 +212,7 @@ Simple, readable, and color-coded. Never rely on color alone to convey meaning.
 
 1. **Profile card:** avatar (initials fallback), name, email.
 2. **Edit name:** inline edit or a small form (required, trimmed), with validation and a success toast.
-3. **Appearance:** theme selector **Light / Dark / System**.
+3. **Appearance:** theme selector **Light / Dark**.
 4. **Log out** button (clears the mock session and redirects to Login).
 5. **Delete account** in a **danger zone**, behind a confirm dialog (clears the user's mock data and session, then redirects to Sign up or Login).
 
