@@ -11,8 +11,9 @@ import {
 type HabitsState = {
   habits: Habit[]
   loading: boolean
+  loaded: boolean
   error: string | null
-  loadHabits: () => Promise<void>
+  loadHabits: (force?: boolean) => Promise<void>
   createHabit: (input: HabitInput) => Promise<Habit | null>
   updateHabit: (id: string, input: HabitInput) => Promise<Habit | null>
   deleteHabit: (id: string) => Promise<boolean>
@@ -20,19 +21,24 @@ type HabitsState = {
   reset: () => void
 }
 
-export const useHabitsStore = create<HabitsState>((set) => ({
+export const useHabitsStore = create<HabitsState>((set, get) => ({
   habits: [],
   loading: false,
+  loaded: false,
   error: null,
 
-  loadHabits: async () => {
+  loadHabits: async (force = false) => {
+    const { loaded, loading } = get()
+    if (loading || (loaded && !force)) return
+
     set({ loading: true, error: null })
     try {
       const habits = await getHabits()
-      set({ habits, loading: false })
+      set({ habits, loading: false, loaded: true })
     } catch (error) {
       set({
         loading: false,
+        loaded: false,
         error: getServiceErrorMessage(error, "Could not load your habits."),
       })
     }
@@ -88,5 +94,5 @@ export const useHabitsStore = create<HabitsState>((set) => ({
 
   clearError: () => set({ error: null }),
 
-  reset: () => set({ habits: [], loading: false, error: null }),
+  reset: () => set({ habits: [], loading: false, loaded: false, error: null }),
 }))

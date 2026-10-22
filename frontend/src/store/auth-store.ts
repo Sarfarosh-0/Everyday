@@ -7,11 +7,20 @@ import {
   getLocalUser,
   logIn as logInService,
   logOut as logOutService,
+  resetLocalData as resetLocalDataService,
   signUp as signUpService,
   updateName as updateNameService,
   type LogInInput,
   type SignUpInput,
 } from "@/lib/services/auth"
+import { useCompletionsStore } from "./completions-store"
+import { useHabitsStore } from "./habits-store"
+
+/** Prevents cached habits/check-ins from leaking between accounts. */
+function resetDataStores() {
+  useHabitsStore.getState().reset()
+  useCompletionsStore.getState().reset()
+}
 
 type AuthState = {
   user: User | null
@@ -25,6 +34,7 @@ type AuthState = {
   logIn: (input: LogInInput) => Promise<boolean>
   logOut: () => Promise<boolean>
   updateName: (name: string) => Promise<boolean>
+  resetData: () => Promise<boolean>
   deleteAccount: () => Promise<boolean>
   clearError: () => void
 }
@@ -67,6 +77,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ error: null })
     try {
       const user = await signUpService(input)
+      resetDataStores()
       set({ user })
       return true
     } catch (error) {
@@ -81,6 +92,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ error: null })
     try {
       const user = await logInService(input)
+      resetDataStores()
       set({ user })
       return true
     } catch (error) {
@@ -95,6 +107,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ error: null })
     try {
       await logOutService()
+      resetDataStores()
       set({ user: null })
       return true
     } catch (error) {
@@ -119,10 +132,24 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
+  resetData: async () => {
+    set({ error: null })
+    try {
+      await resetLocalDataService()
+      return true
+    } catch (error) {
+      set({
+        error: getServiceErrorMessage(error, "Could not clear your data."),
+      })
+      return false
+    }
+  },
+
   deleteAccount: async () => {
     set({ error: null })
     try {
       await deleteAccountService()
+      resetDataStores()
       set({ user: null })
       return true
     } catch (error) {

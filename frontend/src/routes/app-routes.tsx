@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router"
 import { AppShell } from "@/components/layout/app-shell"
 import { AccountPage } from "@/features/account/account-page"
 import { AnalyticsPage } from "@/features/analytics/analytics-page"
@@ -19,6 +19,8 @@ export function AppRoutes() {
             <Route path="account" element={<AccountPage />} />
           </Route>
         </Route>
+        <Route path="/login" element={<Navigate to="/" replace />} />
+        <Route path="/signup" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

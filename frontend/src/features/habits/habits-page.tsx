@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { HabitForm } from "@/features/habits/habit-form"
 import { HabitList } from "@/features/habits/habit-list"
 import type { Habit } from "@/lib/types"
+import { useCompletionsStore } from "@/store/completions-store"
 import { useHabitsStore } from "@/store/habits-store"
 
 export function HabitsPage() {
@@ -18,6 +19,9 @@ export function HabitsPage() {
   const loadHabits = useHabitsStore((state) => state.loadHabits)
   const deleteHabit = useHabitsStore((state) => state.deleteHabit)
   const clearError = useHabitsStore((state) => state.clearError)
+  const removeCompletionsForHabit = useCompletionsStore(
+    (state) => state.removeForHabit,
+  )
 
   const [formOpen, setFormOpen] = useState(false)
   const [editingHabit, setEditingHabit] = useState<Habit | null>(null)
@@ -80,6 +84,7 @@ export function HabitsPage() {
 
     if (!deleted) return
 
+    removeCompletionsForHabit(habit.id)
     toast.success(`Deleted "${habit.name}".`)
     // The trigger row is being removed; keep focus somewhere useful.
     newHabitButtonRef.current?.focus()
@@ -109,7 +114,7 @@ export function HabitsPage() {
             variant="outline"
             size="sm"
             className="mt-3"
-            onClick={() => void loadHabits()}
+            onClick={() => void loadHabits(true)}
           >
             Try again
           </Button>
@@ -137,7 +142,7 @@ export function HabitsPage() {
                 variant="outline"
                 size="sm"
                 className="mt-3"
-                onClick={() => void loadHabits()}
+                onClick={() => void loadHabits(true)}
               >
                 Try again
               </Button>

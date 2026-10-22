@@ -1,4 +1,5 @@
 import { format } from "date-fns"
+import { DEFAULT_USER_NAME } from "@/lib/services/auth"
 import type { User } from "@/lib/types"
 
 type GreetingHeaderProps = {
@@ -24,13 +25,17 @@ function initials(name: string): string {
 
 export function GreetingHeader({ user }: GreetingHeaderProps) {
   const today = new Date()
-  const firstName = user.name.trim().split(/\s+/)[0] || "there"
+  const firstName = user.name.trim().split(/\s+/)[0]
+  const greeting =
+    firstName && firstName !== DEFAULT_USER_NAME
+      ? `${greetingFor(today)}, ${firstName}`
+      : greetingFor(today)
 
   return (
     <header className="flex items-center justify-between gap-3">
       <div className="space-y-1">
         <h1 className="font-heading text-2xl font-semibold tracking-tight">
-          {greetingFor(today)}, {firstName}
+          {greeting}
         </h1>
         <p className="text-sm text-muted-foreground">
           {format(today, "EEEE, d MMMM")}

@@ -71,7 +71,7 @@ function findUser(auth: StoredAuth, userId: string | null): StoredUser | null {
   return auth.users.find((user) => user.id === userId) ?? null
 }
 
-const DEFAULT_USER_NAME = "You"
+export const DEFAULT_USER_NAME = "You"
 
 /**
  * Resolves the profile used while sign-in is disabled: the active session,
@@ -202,6 +202,15 @@ export async function updateName(name: string): Promise<User> {
   }
 
   return toUser(updated)
+}
+
+/** Clears habits and check-ins but keeps the local profile and theme. */
+export async function resetLocalData(): Promise<void> {
+  await simulateDelay()
+
+  const userId = requireSessionUserId()
+  removeStorageItem(userCollectionKey(userId, "habits"))
+  removeStorageItem(userCollectionKey(userId, "completions"))
 }
 
 export async function deleteAccount(): Promise<void> {

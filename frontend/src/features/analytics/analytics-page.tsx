@@ -75,8 +75,8 @@ export function AnalyticsPage() {
   const empty = habits.length === 0 || completions.length === 0
 
   function retry() {
-    void loadHabits()
-    void loadCompletions()
+    void loadHabits(true)
+    void loadCompletions(true)
   }
 
   return (

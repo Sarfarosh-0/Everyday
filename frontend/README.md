@@ -4,7 +4,7 @@ Personal fitness habit tracker (frontend). Create weekday-based habits, check th
 
 This is the **frontend only**. It runs entirely against a mock service layer backed by `localStorage`; there is no backend, API, or database code in this repository.
 
-> **Auth is currently disabled in the UI.** `/login` and `/signup` are not routed, and the app boots with a local device profile: it adopts the most recently saved account, or creates one named "You". The Login/Signup screens and all mock auth functions remain in `src/` so they can be re-enabled later. The Account tab keeps the profile name and theme; log out and delete account are hidden.
+> **Auth is currently disabled in the UI.** `/login` and `/signup` redirect to Home, and the app boots with a local device profile: it adopts the most recently saved account, or creates one named "You". The Login/Signup screens and all mock auth functions remain in `src/` so they can be re-enabled later. The Account tab keeps the profile name, theme, and a **Reset app data** action; log out and delete account are hidden.
 
 ## Requirements
 

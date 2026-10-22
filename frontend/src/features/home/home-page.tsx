@@ -73,8 +73,8 @@ export function HomePage() {
   const error = habitsError ?? completionsError
 
   function retry() {
-    void loadHabits()
-    void loadCompletions()
+    void loadHabits(true)
+    void loadCompletions(true)
   }
 
   function toggleHabit(habitId: string) {
