@@ -1,10 +1,4 @@
-import {
-  ChartColumn,
-  House,
-  ListChecks,
-  UserRound,
-  type LucideIcon,
-} from "lucide-react"
+import { ChartColumn, House, ListChecks, type LucideIcon } from "lucide-react"
 
 export type NavItem = {
   to: string
@@ -16,5 +10,4 @@ export const NAV_ITEMS: NavItem[] = [
   { to: "/", label: "Home", icon: House },
   { to: "/analytics", label: "Analytics", icon: ChartColumn },
   { to: "/habits", label: "Habits", icon: ListChecks },
-  { to: "/account", label: "Account", icon: UserRound },
 ]

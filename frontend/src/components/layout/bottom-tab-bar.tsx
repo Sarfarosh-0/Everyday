@@ -8,7 +8,7 @@ export function BottomTabBar() {
       aria-label="Main"
       className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
     >
-      <ul className="grid grid-cols-4">
+      <ul className="grid grid-cols-3">
         {NAV_ITEMS.map((item) => (
           <li key={item.to}>
             <NavLink
