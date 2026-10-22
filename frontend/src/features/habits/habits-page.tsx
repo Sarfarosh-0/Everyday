@@ -92,69 +92,81 @@ export function HabitsPage() {
 
   return (
     <>
-      <PageHeader title="Habits" description="Create and manage your habits.">
-        <Button ref={newHabitButtonRef} onClick={openCreateForm}>
-          <Plus aria-hidden />
-          New habit
-        </Button>
-      </PageHeader>
+      <PageHeader title="Habits" description="Create and manage your habits." />
 
-      {loading ? (
-        <div className="space-y-3" aria-busy="true" aria-label="Loading habits">
-          <Skeleton className="h-[70px] rounded-xl" />
-          <Skeleton className="h-[70px] rounded-xl" />
-          <Skeleton className="h-[70px] rounded-xl" />
-        </div>
-      ) : error && habits.length === 0 ? (
-        <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4">
-          <p role="alert" className="text-sm text-destructive">
-            {error}
-          </p>
-          <Button
-            variant="outline"
-            size="sm"
-            className="mt-3"
-            onClick={() => void loadHabits(true)}
+      <div className="pb-16 md:pb-20">
+        {loading ? (
+          <div
+            className="space-y-3"
+            aria-busy="true"
+            aria-label="Loading habits"
           >
-            Try again
-          </Button>
-        </div>
-      ) : habits.length === 0 ? (
-        <EmptyState
-          icon={ListChecks}
-          title="No habits yet"
-          description="Create your first habit to start tracking your days."
-          action={
-            <Button onClick={openCreateForm}>
-              <Plus aria-hidden />
-              New habit
+            <Skeleton className="h-[70px] rounded-xl" />
+            <Skeleton className="h-[70px] rounded-xl" />
+            <Skeleton className="h-[70px] rounded-xl" />
+          </div>
+        ) : error && habits.length === 0 ? (
+          <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4">
+            <p role="alert" className="text-sm text-destructive">
+              {error}
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-3"
+              onClick={() => void loadHabits(true)}
+            >
+              Try again
             </Button>
-          }
-        />
-      ) : (
-        <div className="space-y-3">
-          {error ? (
-            <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4">
-              <p role="alert" className="text-sm text-destructive">
-                {error}
-              </p>
-              <Button
-                variant="outline"
-                size="sm"
-                className="mt-3"
-                onClick={() => void loadHabits(true)}
-              >
-                Try again
+          </div>
+        ) : habits.length === 0 ? (
+          <EmptyState
+            icon={ListChecks}
+            title="No habits yet"
+            description="Create your first habit to start tracking your days."
+            action={
+              <Button onClick={openCreateForm}>
+                <Plus aria-hidden />
+                New habit
               </Button>
-            </div>
-          ) : null}
-          <HabitList
-            habits={habits}
-            onEdit={openEditForm}
-            onDelete={requestDelete}
+            }
           />
-        </div>
-      )}
+        ) : (
+          <div className="space-y-3">
+            {error ? (
+              <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4">
+                <p role="alert" className="text-sm text-destructive">
+                  {error}
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-3"
+                  onClick={() => void loadHabits(true)}
+                >
+                  Try again
+                </Button>
+              </div>
+            ) : null}
+            <HabitList
+              habits={habits}
+              onEdit={openEditForm}
+              onDelete={requestDelete}
+            />
+          </div>
+        )}
+      </div>
+
+      <Button
+        ref={newHabitButtonRef}
+        size="icon"
+        aria-label="New habit"
+        title="New habit"
+        className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-30 size-14 rounded-full shadow-float md:right-8 md:bottom-8"
+        onClick={openCreateForm}
+      >
+        <Plus className="size-6" aria-hidden />
+      </Button>
 
       <HabitForm
         open={formOpen}

@@ -1,12 +1,11 @@
 import { cn } from "cn"
-import { Monitor, Moon, Sun, type LucideIcon } from "lucide-react"
+import { Moon, Sun, type LucideIcon } from "lucide-react"
 import { useTheme } from "@/components/theme/theme-context"
 import type { Theme } from "@/components/theme/theme-storage"
 
 const THEME_OPTIONS: { value: Theme; label: string; icon: LucideIcon }[] = [
   { value: "light", label: "Light", icon: Sun },
   { value: "dark", label: "Dark", icon: Moon },
-  { value: "system", label: "System", icon: Monitor },
 ]
 
 export function ThemeSelect() {
@@ -24,13 +23,13 @@ export function ThemeSelect() {
         Appearance
       </h2>
       <p className="mt-1 text-sm text-muted-foreground">
-        Choose a theme, or match your device setting.
+        Choose a light or dark theme.
       </p>
 
       <div
         role="group"
         aria-label="Theme"
-        className="mt-4 grid grid-cols-3 gap-1 rounded-full bg-muted p-1"
+        className="mt-4 grid grid-cols-2 gap-1 rounded-full bg-muted p-1"
       >
         {THEME_OPTIONS.map((option) => {
           const selected = theme === option.value

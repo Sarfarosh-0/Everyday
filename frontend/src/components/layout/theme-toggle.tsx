@@ -1,12 +1,11 @@
 import { cn } from "cn"
-import { Monitor, Moon, Sun, type LucideIcon } from "lucide-react"
+import { Moon, Sun, type LucideIcon } from "lucide-react"
 import { useTheme } from "@/components/theme/theme-context"
 import type { Theme } from "@/components/theme/theme-storage"
 
 const THEME_OPTIONS: { value: Theme; label: string; icon: LucideIcon }[] = [
   { value: "light", label: "Light", icon: Sun },
   { value: "dark", label: "Dark", icon: Moon },
-  { value: "system", label: "System", icon: Monitor },
 ]
 
 export function ThemeToggle() {

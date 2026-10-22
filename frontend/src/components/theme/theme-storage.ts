@@ -1,30 +1,29 @@
 export const THEME_STORAGE_KEY = "fitency-theme"
 
-export type Theme = "light" | "dark" | "system"
+export type Theme = "light" | "dark"
 
 export function getStoredTheme(): Theme {
   try {
     const stored = window.localStorage.getItem(THEME_STORAGE_KEY)
-    if (stored === "light" || stored === "dark" || stored === "system") {
-      return stored
+    if (stored === "light" || stored === "dark") return stored
+
+    if (stored === "system") {
+      // One-time migration for the removed "system" option.
+      const migrated: Theme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light"
+      window.localStorage.setItem(THEME_STORAGE_KEY, migrated)
+      return migrated
     }
   } catch {
     // localStorage may be unavailable (private mode, blocked storage)
   }
-  return "system"
-}
-
-export function getSystemPrefersDark(): boolean {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-}
-
-export function resolveIsDark(theme: Theme): boolean {
-  if (theme === "system") return getSystemPrefersDark()
-  return theme === "dark"
+  return "light"
 }
 
 export function applyTheme(theme: Theme): void {
-  document.documentElement.classList.toggle("dark", resolveIsDark(theme))
+  document.documentElement.classList.toggle("dark", theme === "dark")
 }
 
 export function storeTheme(theme: Theme): void {

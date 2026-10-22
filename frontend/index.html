@@ -10,11 +10,15 @@
       ;(function () {
         try {
           var stored = localStorage.getItem("fitency-theme")
-          var dark =
-            stored === "dark" ||
-            ((stored === null || stored === "system") &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches)
-          document.documentElement.classList.toggle("dark", dark)
+          var theme =
+            stored === "dark" || stored === "light"
+              ? stored
+              : stored === "system" &&
+                  window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light"
+          localStorage.setItem("fitency-theme", theme)
+          document.documentElement.classList.toggle("dark", theme === "dark")
         } catch {
           /* storage unavailable; fall back to light */
         }
