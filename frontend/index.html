@@ -4,12 +4,18 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fitency</title>
+    <title>Everyday</title>
     <script>
       // Applies the stored theme before first paint to avoid a flash of the wrong theme.
       ;(function () {
         try {
-          var stored = localStorage.getItem("fitency-theme")
+          var key = "everyday-theme"
+          var stored = localStorage.getItem(key)
+          if (stored === null) {
+            // One-time move from the pre-rename key.
+            stored = localStorage.getItem("fitency-theme")
+            if (stored !== null) localStorage.setItem(key, stored)
+          }
           var theme =
             stored === "dark" || stored === "light"
               ? stored
@@ -17,7 +23,7 @@
                   window.matchMedia("(prefers-color-scheme: dark)").matches
                 ? "dark"
                 : "light"
-          localStorage.setItem("fitency-theme", theme)
+          localStorage.setItem(key, theme)
           document.documentElement.classList.toggle("dark", theme === "dark")
         } catch {
           /* storage unavailable; fall back to light */

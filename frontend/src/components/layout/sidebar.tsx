@@ -9,7 +9,7 @@ export function Sidebar() {
       className="sticky top-0 hidden h-svh w-60 shrink-0 flex-col gap-6 border-r border-sidebar-border bg-sidebar px-4 py-6 md:flex"
     >
       <p className="px-3 font-heading text-xl font-semibold text-primary">
-        Fitency
+        Everyday
       </p>
       <ul className="space-y-1">
         {NAV_ITEMS.map((item) => (

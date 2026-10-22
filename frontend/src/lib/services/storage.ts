@@ -1,6 +1,35 @@
 import { ServiceError } from "./errors"
 
-const STORAGE_PREFIX = "fitency"
+const STORAGE_PREFIX = "everyday"
+const LEGACY_STORAGE_PREFIX = "fitency"
+
+let hasMigratedLegacyStorage = false
+
+/** Copies pre-rename keys into the new namespace once, leaving originals intact. */
+function migrateLegacyStorage(storage: Storage): void {
+  if (hasMigratedLegacyStorage) return
+  hasMigratedLegacyStorage = true
+
+  try {
+    const legacyPrefix = `${LEGACY_STORAGE_PREFIX}:`
+    const legacyKeys: string[] = []
+
+    for (let index = 0; index < storage.length; index += 1) {
+      const key = storage.key(index)
+      if (key?.startsWith(legacyPrefix)) legacyKeys.push(key)
+    }
+
+    for (const key of legacyKeys) {
+      const value = storage.getItem(key)
+      const migratedKey = `${STORAGE_PREFIX}${key.slice(LEGACY_STORAGE_PREFIX.length)}`
+      if (value !== null && storage.getItem(migratedKey) === null) {
+        storage.setItem(migratedKey, value)
+      }
+    }
+  } catch {
+    // Best-effort only: a failed migration leaves the old keys untouched.
+  }
+}
 
 export const AUTH_STORAGE_KEY = `${STORAGE_PREFIX}:auth`
 
@@ -26,6 +55,7 @@ export function getLocalStorage(): Storage {
     const probeKey = `${STORAGE_PREFIX}:probe`
     storage.setItem(probeKey, "1")
     storage.removeItem(probeKey)
+    migrateLegacyStorage(storage)
 
     return storage
   } catch {

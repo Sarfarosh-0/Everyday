@@ -12,7 +12,7 @@ export function AppShell() {
           <header className="sticky top-0 z-30 border-b border-border/60 bg-background/95 backdrop-blur">
             <div className="mx-auto flex h-14 w-full max-w-3xl items-center justify-between gap-3 px-4 md:px-8">
               <p className="font-heading text-lg font-semibold text-primary md:hidden">
-                Fitency
+                Everyday
               </p>
               <div className="ml-auto">
                 <ThemeToggle />

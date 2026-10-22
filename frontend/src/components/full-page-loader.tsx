@@ -3,7 +3,7 @@ type FullPageLoaderProps = {
 }
 
 export function FullPageLoader({
-  label = "Loading Fitency…",
+  label = "Loading Everyday…",
 }: FullPageLoaderProps) {
   return (
     <div
