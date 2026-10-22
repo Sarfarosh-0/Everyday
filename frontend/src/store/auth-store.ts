@@ -4,6 +4,7 @@ import { getServiceErrorMessage } from "@/lib/services/errors"
 import {
   deleteAccount as deleteAccountService,
   getCurrentUser,
+  getLocalUser,
   logIn as logInService,
   logOut as logOutService,
   signUp as signUpService,
@@ -19,6 +20,7 @@ type AuthState = {
   initialized: boolean
   error: string | null
   loadCurrentUser: () => Promise<void>
+  loadLocalUser: () => Promise<void>
   signUp: (input: SignUpInput) => Promise<boolean>
   logIn: (input: LogInInput) => Promise<boolean>
   logOut: () => Promise<boolean>
@@ -43,6 +45,20 @@ export const useAuthStore = create<AuthState>((set) => ({
         loading: false,
         initialized: true,
         error: getServiceErrorMessage(error, "Could not load your account."),
+      })
+    }
+  },
+
+  loadLocalUser: async () => {
+    set({ loading: true, error: null })
+    try {
+      const user = await getLocalUser()
+      set({ user, loading: false, initialized: true })
+    } catch (error) {
+      set({
+        loading: false,
+        initialized: true,
+        error: getServiceErrorMessage(error, "Could not load your profile."),
       })
     }
   },

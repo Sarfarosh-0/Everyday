@@ -33,7 +33,9 @@ export function ProfileCard({ user }: ProfileCardProps) {
         >
           {user.name}
         </h2>
-        <p className="truncate text-sm text-muted-foreground">{user.email}</p>
+        {user.email ? (
+          <p className="truncate text-sm text-muted-foreground">{user.email}</p>
+        ) : null}
       </div>
     </section>
   )

@@ -71,16 +71,43 @@ function findUser(auth: StoredAuth, userId: string | null): StoredUser | null {
   return auth.users.find((user) => user.id === userId) ?? null
 }
 
-/** Used by the habit and completion services; throws when there is no session. */
-export function requireSessionUserId(): string {
-  const auth = readAuth()
-  const user = findUser(auth, auth.sessionUserId)
+const DEFAULT_USER_NAME = "You"
 
-  if (!user) {
-    throw new ServiceError("not-signed-in", "Please sign in to continue.")
+/**
+ * Resolves the profile used while sign-in is disabled: the active session,
+ * otherwise the most recently saved account, otherwise a new local profile.
+ */
+function resolveLocalUser(): StoredUser {
+  const auth = readAuth()
+  const sessionUser = findUser(auth, auth.sessionUserId)
+  if (sessionUser) return sessionUser
+
+  const latestUser = auth.users[auth.users.length - 1]
+  if (latestUser) {
+    writeAuth({ ...auth, sessionUserId: latestUser.id })
+    return latestUser
   }
 
-  return user.id
+  const user: StoredUser = {
+    id: crypto.randomUUID(),
+    name: DEFAULT_USER_NAME,
+    email: "",
+    password: "",
+  }
+
+  writeAuth({ users: [user], sessionUserId: user.id })
+  return user
+}
+
+/** Used by the habit and completion services. */
+export function requireSessionUserId(): string {
+  return resolveLocalUser().id
+}
+
+/** Loads the local profile shown by the app while sign-in is disabled. */
+export async function getLocalUser(): Promise<User> {
+  await simulateDelay()
+  return toUser(resolveLocalUser())
 }
 
 export async function signUp(input: SignUpInput): Promise<User> {
