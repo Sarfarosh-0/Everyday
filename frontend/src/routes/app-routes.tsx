@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router"
+import { BrowserRouter, Route, Routes } from "react-router"
 import { AppShell } from "@/components/layout/app-shell"
 import { AnalyticsPage } from "@/features/analytics/analytics-page"
 import { HabitsPage } from "@/features/habits/habits-page"
@@ -9,6 +9,7 @@ import { NotFoundPage } from "@/routes/not-found-page"
 export function AppRoutes() {
   return (
     <BrowserRouter>
+      {/* Login, Signup, and Account stay in src/ but are intentionally not routed. */}
       <Routes>
         <Route element={<AppBootstrap />}>
           <Route element={<AppShell />}>
@@ -17,8 +18,6 @@ export function AppRoutes() {
             <Route path="habits" element={<HabitsPage />} />
           </Route>
         </Route>
-        <Route path="/login" element={<Navigate to="/" replace />} />
-        <Route path="/signup" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
