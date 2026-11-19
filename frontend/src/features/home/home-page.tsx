@@ -94,7 +94,7 @@ export function HomePage() {
           aria-busy="true"
           aria-label="Loading your dashboard"
         >
-          <Skeleton className="h-56 rounded-xl" />
+          <Skeleton className="h-36 rounded-xl" />
           <Skeleton className="h-8 w-36 rounded-full" />
           <div className="space-y-3">
             <Skeleton className="h-16 rounded-xl" />
