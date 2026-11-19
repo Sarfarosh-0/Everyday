@@ -1,9 +1,16 @@
-import { Outlet } from "react-router"
+import { useEffect } from "react"
+import { Outlet, useLocation } from "react-router"
 import { BottomTabBar } from "@/components/layout/bottom-tab-bar"
 import { Sidebar } from "@/components/layout/sidebar"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
 
 export function AppShell() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
   return (
     <div className="min-h-svh">
       <div className="mx-auto flex w-full max-w-6xl">
