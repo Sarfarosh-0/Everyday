@@ -36,8 +36,8 @@ export function HabitItem({
         title={habit.name}
         className={
           completed
-            ? "min-w-0 flex-1 truncate text-sm text-muted-foreground line-through"
-            : "min-w-0 flex-1 truncate text-sm"
+            ? "line-clamp-2 min-w-0 flex-1 text-sm text-muted-foreground line-through"
+            : "line-clamp-2 min-w-0 flex-1 text-sm"
         }
       >
         {habit.name}

@@ -75,7 +75,7 @@ function HabitBreakdownRow({
           <Icon className="size-4" />
         </span>
         <span
-          className="min-w-0 flex-1 truncate font-medium"
+          className="line-clamp-2 min-w-0 flex-1 font-medium"
           title={habit.name}
         >
           {habit.name}

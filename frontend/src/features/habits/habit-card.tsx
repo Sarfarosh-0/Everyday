@@ -32,7 +32,7 @@ export function HabitCard({ habit, onEdit, onDelete }: HabitCardProps) {
         <Icon className="size-5" />
       </span>
       <div className="min-w-0 flex-1 space-y-1">
-        <p className="truncate font-medium" title={habit.name}>
+        <p className="line-clamp-2 font-medium" title={habit.name}>
           {habit.name}
         </p>
         <ul className="flex flex-wrap gap-1">
