@@ -17,7 +17,7 @@ export function AppShell() {
         <Sidebar />
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-30 border-b border-border/60 bg-background/95 backdrop-blur">
-            <div className="mx-auto flex h-14 w-full max-w-3xl items-center justify-between gap-3 px-4 md:px-8">
+            <div className="mx-auto flex h-14 w-full max-w-4xl items-center justify-between gap-3 px-4 md:px-8">
               <p className="font-heading text-lg font-semibold text-primary md:hidden">
                 Everyday
               </p>
@@ -26,7 +26,7 @@ export function AppShell() {
               </div>
             </div>
           </header>
-          <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-6 pb-28 md:px-8 md:py-10 md:pb-12">
+          <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-6 pb-28 md:px-8 md:py-10 md:pb-12">
             <Outlet />
           </main>
         </div>
