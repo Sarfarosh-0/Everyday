@@ -4,6 +4,7 @@ import {
   Line,
   LineChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from "recharts"
@@ -34,6 +35,15 @@ export function TrendChart({
       point.percent !== null,
   )
 
+  // Days before the first habit only draw a long empty axis.
+  const firstScheduled = data.findIndex((point) => point.percent !== null)
+  const chartData = firstScheduled > 0 ? data.slice(firstScheduled) : data
+  const firstDate = chartData[0]?.date
+  const yearTicks = chartData
+    .filter((point) => point.date.endsWith("-01"))
+    .map((point) => point.date)
+  if (firstDate && !firstDate.endsWith("-01")) yearTicks.unshift(firstDate)
+
   return (
     <section
       aria-labelledby="trend-title"
@@ -56,7 +66,7 @@ export function TrendChart({
             <div aria-hidden="true" className="h-[220px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
-                  data={data}
+                  data={chartData}
                   accessibilityLayer={false}
                   margin={{ top: 8, right: 8, bottom: 0, left: 0 }}
                 >
@@ -67,6 +77,7 @@ export function TrendChart({
                   />
                   <XAxis
                     dataKey="date"
+                    ticks={range === "year" ? yearTicks : undefined}
                     tickFormatter={(value: string) => formatTick(value, range)}
                     tickLine={false}
                     axisLine={false}
@@ -84,6 +95,23 @@ export function TrendChart({
                     axisLine={false}
                     tickMargin={4}
                     tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
+                  />
+                  <Tooltip
+                    cursor={{ stroke: "var(--border)" }}
+                    contentStyle={{
+                      background: "var(--popover)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "var(--radius-md)",
+                      fontSize: 12,
+                      color: "var(--popover-foreground)",
+                    }}
+                    labelFormatter={(value) =>
+                      format(parseDateKey(String(value)), "d MMM yyyy")
+                    }
+                    formatter={(value) => [
+                      typeof value === "number" ? `${value}%` : "No habits",
+                      "Completed",
+                    ]}
                   />
                   <Line
                     type="monotone"
