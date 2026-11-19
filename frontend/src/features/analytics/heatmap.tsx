@@ -139,14 +139,23 @@ export function Heatmap({
 
       <div
         aria-hidden
-        className="mt-4 flex flex-wrap items-center justify-end gap-1.5 text-[0.65rem] text-muted-foreground"
+        className="mt-4 flex flex-wrap items-center justify-end gap-x-3 gap-y-1.5 text-[0.65rem] text-muted-foreground"
       >
-        <span>Less</span>
-        <span className={cn("size-3 rounded-[3px]", levelClass("zero"))} />
-        <span className={cn("size-3 rounded-[3px]", levelClass("some"))} />
-        <span className={cn("size-3 rounded-[3px]", levelClass("high"))} />
-        <span className={cn("size-3 rounded-[3px]", levelClass("full"))} />
-        <span>More</span>
+        <span className="flex items-center gap-1.5">
+          <span className={cn("size-3 rounded-[3px]", levelClass("none"))} />
+          No habits
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className={cn("size-3 rounded-[3px]", levelClass("zero"))} />
+          0%
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span>Less</span>
+          <span className={cn("size-3 rounded-[3px]", levelClass("some"))} />
+          <span className={cn("size-3 rounded-[3px]", levelClass("high"))} />
+          <span className={cn("size-3 rounded-[3px]", levelClass("full"))} />
+          <span>More</span>
+        </span>
       </div>
     </section>
   )
@@ -359,7 +368,7 @@ type Level = "future" | "none" | "zero" | "some" | "high" | "full"
 const LEVEL_CLASSES: Record<Level, string> = {
   future: "bg-muted/40 text-muted-foreground/40",
   none: "bg-muted text-muted-foreground",
-  zero: "bg-success/10 text-foreground",
+  zero: "bg-success/10 text-foreground inset-ring-1 inset-ring-success/60",
   some: "bg-success/25 text-foreground",
   high: "bg-success/45 text-foreground",
   full: "bg-success text-success-foreground",
