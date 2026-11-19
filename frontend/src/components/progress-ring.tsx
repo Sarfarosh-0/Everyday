@@ -22,6 +22,7 @@ export function ProgressRing({
 }: ProgressRingProps) {
   const fraction = Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : 0
   const percent = Math.round(fraction * 100)
+  const complete = fraction === 1
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const offset = circumference * (1 - fraction)
@@ -54,7 +55,7 @@ export function ProgressRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="var(--primary)"
+          stroke={complete ? "var(--success)" : "var(--primary)"}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}

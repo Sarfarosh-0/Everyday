@@ -20,7 +20,15 @@ export function TodayProgressCard({ stats }: TodayProgressCardProps) {
           size={112}
           strokeWidth={12}
         >
-          <span className="font-heading text-2xl font-semibold">{percent}%</span>
+          <span
+            className={
+              percent === 100
+                ? "font-heading text-2xl font-semibold text-success"
+                : "font-heading text-2xl font-semibold"
+            }
+          >
+            {percent}%
+          </span>
         </ProgressRing>
         <div className="min-w-0 space-y-1">
           <h2
