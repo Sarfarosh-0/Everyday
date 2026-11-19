@@ -46,11 +46,11 @@ export function HabitCard({ habit, onEdit, onDelete }: HabitCardProps) {
           ))}
         </ul>
       </div>
-      <div className="flex shrink-0 gap-1">
+      <div className="flex shrink-0 gap-2">
         <Button
           type="button"
           variant="ghost"
-          size="icon"
+          size="icon-lg"
           aria-label={`Edit ${habit.name}`}
           onClick={() => onEdit(habit)}
         >
@@ -59,7 +59,7 @@ export function HabitCard({ habit, onEdit, onDelete }: HabitCardProps) {
         <Button
           type="button"
           variant="ghost"
-          size="icon"
+          size="icon-lg"
           aria-label={`Delete ${habit.name}`}
           onClick={() => onDelete(habit)}
         >

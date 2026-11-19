@@ -118,7 +118,7 @@ export function Heatmap({
   return (
     <section
       aria-labelledby="heatmap-title"
-      className="rounded-xl border border-border/60 bg-card p-5"
+      className="rounded-xl border border-border/60 bg-card p-4 sm:p-5"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="heatmap-title" className="font-heading text-base font-semibold">
@@ -175,7 +175,10 @@ function CalendarHeatmap({
 
   return (
     <div className="mx-auto max-w-md">
-      <div className="grid grid-cols-7 gap-1.5" aria-hidden>
+      <div
+        className="-mx-2 grid grid-cols-7 gap-1 sm:mx-0"
+        aria-hidden
+      >
         {WEEKDAY_LABELS.map((label) => (
           <span
             key={label}
@@ -190,7 +193,7 @@ function CalendarHeatmap({
         role="group"
         aria-label="Monthly completion calendar. Use the arrow keys to move between days."
         onKeyDown={onKeyDown}
-        className="mt-1.5 grid grid-cols-7 gap-1.5"
+        className="mt-1.5 -mx-2 grid grid-cols-7 gap-1 sm:mx-0"
       >
         {Array.from({ length: leadingBlanks }, (_, index) => (
           <span key={`blank-${index}`} aria-hidden />
