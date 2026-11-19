@@ -150,7 +150,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       await deleteAccountService()
       resetDataStores()
-      set({ user: null })
+      // Sign-in is disabled, so continue with a fresh local profile instead of
+      // dropping the user into the "profile unavailable" state.
+      const user = await getLocalUser()
+      set({ user })
       return true
     } catch (error) {
       set({

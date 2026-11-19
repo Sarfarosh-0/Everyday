@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 import { toast } from "sonner"
 import { PageHeader } from "@/components/layout/page-header"
+import { DangerZone } from "@/features/account/danger-zone"
 import { NameEditForm } from "@/features/account/name-edit-form"
 import { ProfileCard } from "@/features/account/profile-card"
 import { ResetDataSection } from "@/features/account/reset-data-section"
@@ -9,12 +11,14 @@ import { useAuthStore } from "@/store/auth-store"
 import { useCompletionsStore } from "@/store/completions-store"
 import { useHabitsStore } from "@/store/habits-store"
 
-type AccountAction = "name" | "reset"
+type AccountAction = "name" | "reset" | "delete"
 
 export function AccountPage() {
+  const navigate = useNavigate()
   const user = useAuthStore((state) => state.user)
   const updateName = useAuthStore((state) => state.updateName)
   const resetData = useAuthStore((state) => state.resetData)
+  const deleteAccount = useAuthStore((state) => state.deleteAccount)
   const accountError = useAuthStore((state) => state.error)
   const clearError = useAuthStore((state) => state.clearError)
   const resetHabits = useHabitsStore((state) => state.reset)
@@ -22,6 +26,7 @@ export function AccountPage() {
 
   const [activeAction, setActiveAction] = useState<AccountAction | null>(null)
   const [resetting, setResetting] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     clearError()
@@ -55,6 +60,22 @@ export function AccountPage() {
     toast.success("Your habits and history were cleared.")
   }
 
+  async function deleteAccountAndRestart() {
+    setActiveAction("delete")
+    setDeleting(true)
+    clearError()
+
+    const deleted = await deleteAccount()
+    if (!deleted) {
+      setDeleting(false)
+      return
+    }
+
+    setDeleting(false)
+    toast.success("Account deleted. You are starting fresh.")
+    navigate("/", { replace: true })
+  }
+
   if (!user) return null
 
   return (
@@ -72,6 +93,11 @@ export function AccountPage() {
           resetting={resetting}
           error={activeAction === "reset" ? accountError : null}
           onReset={clearData}
+        />
+        <DangerZone
+          deleting={deleting}
+          error={activeAction === "delete" ? accountError : null}
+          onDelete={deleteAccountAndRestart}
         />
       </div>
     </>

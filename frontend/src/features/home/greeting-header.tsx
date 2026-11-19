@@ -1,4 +1,5 @@
 import { format } from "date-fns"
+import { Link } from "react-router"
 import { DEFAULT_USER_NAME } from "@/lib/services/auth"
 import type { User } from "@/lib/types"
 
@@ -41,12 +42,13 @@ export function GreetingHeader({ user }: GreetingHeaderProps) {
           {format(today, "EEEE, d MMMM")}
         </p>
       </div>
-      <span
-        aria-hidden
-        className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 font-heading text-sm font-semibold text-primary"
+      <Link
+        to="/account"
+        aria-label="Open account"
+        className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 font-heading text-sm font-semibold text-primary outline-none transition-colors hover:bg-primary/20 focus-visible:ring-3 focus-visible:ring-ring/50"
       >
-        {initials(user.name)}
-      </span>
+        <span aria-hidden>{initials(user.name)}</span>
+      </Link>
     </header>
   )
 }
