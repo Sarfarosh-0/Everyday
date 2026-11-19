@@ -1,14 +1,29 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { Outlet, useLocation } from "react-router"
 import { BottomTabBar } from "@/components/layout/bottom-tab-bar"
+import { NAV_ITEMS } from "@/components/layout/nav-items"
 import { Sidebar } from "@/components/layout/sidebar"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
 
 export function AppShell() {
   const { pathname } = useLocation()
+  const isFirstRoute = useRef(true)
 
   useEffect(() => {
     window.scrollTo(0, 0)
+
+    const section = NAV_ITEMS.find((item) => item.to === pathname)?.label
+    document.title = section ? `${section} · Everyday` : "Everyday"
+
+    // Announce the new page without stealing focus on the initial load.
+    if (isFirstRoute.current) {
+      isFirstRoute.current = false
+      return
+    }
+
+    const heading = document.querySelector<HTMLElement>("main h1")
+    heading?.setAttribute("tabindex", "-1")
+    heading?.focus()
   }, [pathname])
 
   return (

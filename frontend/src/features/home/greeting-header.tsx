@@ -35,7 +35,7 @@ export function GreetingHeader({ user }: GreetingHeaderProps) {
   return (
     <header className="flex items-center justify-between gap-3">
       <div className="space-y-1">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">
+        <h1 className="font-heading text-2xl font-semibold tracking-tight outline-none">
           {greeting}
         </h1>
         <p className="text-sm text-muted-foreground">
