@@ -28,7 +28,7 @@ export function ColorPicker({
         role="group"
         aria-labelledby={labelId}
         aria-describedby={error ? errorId : undefined}
-        className="flex flex-wrap gap-3"
+        className="grid grid-cols-4 justify-items-center gap-3 sm:grid-cols-8"
       >
         {HABIT_COLORS.map((option) => {
           const selected = option.value === value
