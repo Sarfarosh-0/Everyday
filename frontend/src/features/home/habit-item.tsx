@@ -24,7 +24,7 @@ export function HabitItem({
         aria-label={
           completed ? `Uncheck ${habit.name}` : `Check off ${habit.name}`
         }
-        className="group flex size-11 shrink-0 items-center justify-center rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="group flex size-11 shrink-0 items-center justify-center rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring"
       >
         <span className="flex size-6 items-center justify-center rounded-md border border-input bg-background transition-colors group-data-[state=checked]:border-success group-data-[state=checked]:bg-success group-data-[state=checked]:text-success-foreground">
           <Checkbox.Indicator>

@@ -16,7 +16,7 @@ export function BottomTabBar() {
               end={item.to === "/"}
               className={({ isActive }) =>
                 cn(
-                  "flex h-16 flex-col items-center justify-center gap-1 text-[0.7rem] font-medium transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset",
+                  "flex h-16 flex-col items-center justify-center gap-1 text-[0.7rem] font-medium transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring focus-visible:ring-inset",
                   isActive
                     ? "font-semibold text-primary"
                     : "text-muted-foreground hover:text-foreground",

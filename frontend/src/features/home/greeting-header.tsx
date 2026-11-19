@@ -45,7 +45,7 @@ export function GreetingHeader({ user }: GreetingHeaderProps) {
       <Link
         to="/account"
         aria-label="Open account"
-        className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 font-heading text-sm font-semibold text-primary outline-none transition-colors hover:bg-primary/20 focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 font-heading text-sm font-semibold text-primary outline-none transition-colors hover:bg-primary/20 focus-visible:ring-3 focus-visible:ring-ring"
       >
         <span aria-hidden>{initials(user.name)}</span>
       </Link>

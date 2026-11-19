@@ -332,7 +332,7 @@ function HeatmapCell({
       onFocus={onFocus}
       onClick={() => onSelectDay(day.date)}
       className={cn(
-        "outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+        "outline-none focus-visible:ring-3 focus-visible:ring-ring",
         day.interactive
           ? "cursor-pointer hover:ring-2 hover:ring-foreground/25"
           : "cursor-default",
