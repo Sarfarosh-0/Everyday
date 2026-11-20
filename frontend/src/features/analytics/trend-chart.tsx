@@ -110,7 +110,7 @@ export function TrendChart({
                     }
                     formatter={(value) => [
                       typeof value === "number" ? `${value}%` : "No habits",
-                      "Completed",
+                      "Completion",
                     ]}
                   />
                   <Line
