@@ -40,7 +40,7 @@ export function ThemeSelect() {
               type="button"
               aria-pressed={selected}
               className={cn(
-                "flex min-h-10 items-center justify-center gap-1.5 rounded-full px-2 py-2 text-sm font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring",
+                "flex min-h-11 items-center justify-center gap-1.5 rounded-full px-2 py-2 text-sm font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring",
                 selected
                   ? "bg-background text-foreground shadow-soft"
                   : "text-muted-foreground hover:text-foreground",

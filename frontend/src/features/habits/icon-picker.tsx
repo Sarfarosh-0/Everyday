@@ -28,7 +28,7 @@ export function IconPicker({
         role="group"
         aria-labelledby={labelId}
         aria-describedby={error ? errorId : undefined}
-        className="grid grid-cols-[repeat(auto-fit,minmax(2.5rem,1fr))] justify-items-center gap-2"
+        className="grid grid-cols-[repeat(auto-fit,minmax(2.75rem,1fr))] justify-items-center gap-2"
       >
         {HABIT_ICONS.map((option) => {
           const Icon = option.icon
@@ -39,7 +39,7 @@ export function IconPicker({
               key={option.key}
               type="button"
               variant="outline"
-              size="icon"
+              size="icon-lg"
               aria-label={option.label}
               aria-pressed={selected}
               className={cn(
