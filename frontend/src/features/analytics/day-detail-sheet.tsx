@@ -77,7 +77,7 @@ export function DayDetailSheet({
                       aria-hidden
                       className="size-4 shrink-0 text-success"
                     />
-                    <span className="truncate text-sm" title={habit.name}>
+                    <span className="line-clamp-2 text-sm" title={habit.name}>
                       {habit.name}
                     </span>
                   </li>
@@ -105,7 +105,7 @@ export function DayDetailSheet({
                       aria-hidden
                       className="size-4 shrink-0 text-muted-foreground"
                     />
-                    <span className="truncate text-sm" title={habit.name}>
+                    <span className="line-clamp-2 text-sm" title={habit.name}>
                       {habit.name}
                     </span>
                   </li>

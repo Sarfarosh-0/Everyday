@@ -24,7 +24,7 @@ export function HabitItem({
         aria-label={
           completed ? `Uncheck ${habit.name}` : `Check off ${habit.name}`
         }
-        className="group flex size-11 shrink-0 items-center justify-center rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="group flex size-11 shrink-0 items-center justify-center rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring"
       >
         <span className="flex size-6 items-center justify-center rounded-md border border-input bg-background transition-colors group-data-[state=checked]:border-success group-data-[state=checked]:bg-success group-data-[state=checked]:text-success-foreground">
           <Checkbox.Indicator>
@@ -36,8 +36,8 @@ export function HabitItem({
         title={habit.name}
         className={
           completed
-            ? "min-w-0 flex-1 truncate text-sm text-muted-foreground line-through"
-            : "min-w-0 flex-1 truncate text-sm"
+            ? "line-clamp-2 min-w-0 flex-1 text-sm text-muted-foreground line-through"
+            : "line-clamp-2 min-w-0 flex-1 text-sm"
         }
       >
         {habit.name}

@@ -28,7 +28,7 @@ export function IconPicker({
         role="group"
         aria-labelledby={labelId}
         aria-describedby={error ? errorId : undefined}
-        className="flex flex-wrap gap-2"
+        className="grid grid-cols-[repeat(auto-fit,minmax(2.5rem,1fr))] justify-items-center gap-2"
       >
         {HABIT_ICONS.map((option) => {
           const Icon = option.icon

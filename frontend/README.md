@@ -4,7 +4,7 @@ Personal fitness habit tracker (frontend). Create weekday-based habits, check th
 
 This is the **frontend only**. It runs entirely against a mock service layer backed by `localStorage`; there is no backend, API, or database code in this repository.
 
-> **Auth and Account are currently disabled in the UI.** `/login`, `/signup`, and `/account` are not routed and fall through to the 404 page. The app boots with a local device profile: it adopts the most recently saved account, or creates one named "You". The Login/Signup screens, the whole Account section, and all mock auth functions remain in `src/` so they can be re-enabled later. Theme selection (Light/Dark) lives in the app header; the bottom navigation has three tabs (Home, Analytics, Habits). New habits are created with the floating action button on the Habits page.
+> **Sign-in is disabled in the UI.** `/login` and `/signup` are not routed and fall through to the 404 page. The app boots with a local device profile: it adopts the most recently saved account, or creates one named "You". The Login/Signup screens and all mock auth functions remain in `src/` so they can be re-enabled later. The app has four tabs (Home, Analytics, Habits, Account); the theme selector lives on the Account page, with a quick toggle in the app header. New habits are created with the floating action button on the Habits page.
 
 ## Requirements
 
@@ -58,7 +58,7 @@ To plug in a real backend, replace only the service functions; their signatures 
 src/
   components/ui/     # shadcn/ui primitives
   components/        # shared components
-  features/          # home, habits, analytics (account/auth kept in source)
+  features/          # home, habits, analytics, account (auth kept in source)
   lib/services/      # mock data layer (localStorage)
   lib/utils/         # date, streak, and completion helpers
   store/             # Zustand stores

@@ -29,10 +29,21 @@ export function HabitsPage() {
   const formTriggerRef = useRef<HTMLElement | null>(null)
   const deleteTriggerRef = useRef<HTMLElement | null>(null)
   const newHabitButtonRef = useRef<HTMLButtonElement>(null)
+  const emptyStateButtonRef = useRef<HTMLButtonElement>(null)
+  const focusAfterDeleteRef = useRef(false)
 
   useEffect(() => {
     void loadHabits()
   }, [loadHabits])
+
+  // Deleting the last habit removes the row and the floating button.
+  useEffect(() => {
+    if (!focusAfterDeleteRef.current) return
+    focusAfterDeleteRef.current = false
+    const target =
+      habits.length > 0 ? newHabitButtonRef.current : emptyStateButtonRef.current
+    target?.focus()
+  }, [habits])
 
   // Radix only restores focus to a DialogTrigger; remember the opener ourselves.
   function rememberFormTrigger() {
@@ -80,14 +91,16 @@ export function HabitsPage() {
     if (!habit) return
 
     setDeletingHabit(null)
+    focusAfterDeleteRef.current = true
     const deleted = await deleteHabit(habit.id)
 
-    if (!deleted) return
+    if (!deleted) {
+      focusAfterDeleteRef.current = false
+      return
+    }
 
     removeCompletionsForHabit(habit.id)
     toast.success(`Deleted "${habit.name}".`)
-    // The trigger row is being removed; keep focus somewhere useful.
-    newHabitButtonRef.current?.focus()
   }
 
   return (
@@ -125,7 +138,7 @@ export function HabitsPage() {
             title="No habits yet"
             description="Create your first habit to start tracking your days."
             action={
-              <Button onClick={openCreateForm}>
+              <Button ref={emptyStateButtonRef} onClick={openCreateForm}>
                 <Plus aria-hidden />
                 New habit
               </Button>
@@ -157,16 +170,18 @@ export function HabitsPage() {
         )}
       </div>
 
-      <Button
-        ref={newHabitButtonRef}
-        size="icon"
-        aria-label="New habit"
-        title="New habit"
-        className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-30 size-14 rounded-full shadow-float md:right-8 md:bottom-8"
-        onClick={openCreateForm}
-      >
-        <Plus className="size-6" aria-hidden />
-      </Button>
+      {habits.length > 0 ? (
+        <Button
+          ref={newHabitButtonRef}
+          size="icon"
+          aria-label="New habit"
+          title="New habit"
+          className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-30 size-14 rounded-full shadow-float md:right-8 md:bottom-8"
+          onClick={openCreateForm}
+        >
+          <Plus className="size-6" aria-hidden />
+        </Button>
+      ) : null}
 
       <HabitForm
         open={formOpen}

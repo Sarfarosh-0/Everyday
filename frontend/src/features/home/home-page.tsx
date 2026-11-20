@@ -94,7 +94,7 @@ export function HomePage() {
           aria-busy="true"
           aria-label="Loading your dashboard"
         >
-          <Skeleton className="h-56 rounded-xl" />
+          <Skeleton className="h-36 rounded-xl" />
           <Skeleton className="h-8 w-36 rounded-full" />
           <div className="space-y-3">
             <Skeleton className="h-16 rounded-xl" />
@@ -126,82 +126,88 @@ export function HomePage() {
           }
         />
       ) : (
-        <>
-          {scheduledToday.length > 0 ? (
-            <TodayProgressCard stats={todayStats} />
-          ) : null}
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:items-start">
+          <div className="space-y-6 lg:col-start-1 lg:row-start-1">
+            {scheduledToday.length > 0 ? (
+              <TodayProgressCard stats={todayStats} />
+            ) : null}
 
-          <StreakBadge streak={streak} />
+            <StreakBadge streak={streak} />
+          </div>
 
-          {scheduledToday.length === 0 ? (
-            <EmptyState
-              icon={CalendarX}
-              title="Nothing scheduled today"
-              description="Enjoy the rest day."
+          <div className="space-y-6 lg:col-start-2 lg:row-span-3 lg:row-start-1">
+            {scheduledToday.length === 0 ? (
+              <EmptyState
+                icon={CalendarX}
+                title="Nothing scheduled today"
+                description="Enjoy the rest day."
+              />
+            ) : (
+              <>
+                {pending.length === 0 ? (
+                  <p className="rounded-xl bg-success/10 px-4 py-3 text-sm font-medium text-success">
+                    All done for today — nice work.
+                  </p>
+                ) : (
+                  <section aria-labelledby="pending-title" className="space-y-3">
+                    <h2
+                      id="pending-title"
+                      className="font-heading text-base font-semibold"
+                    >
+                      Pending
+                    </h2>
+                    <ul className="space-y-3">
+                      {pending.map((habit) => (
+                        <li key={habit.id}>
+                          <HabitItem
+                            habit={habit}
+                            completed={false}
+                            autoFocus={habit.id === focusHabitId}
+                            onToggle={() => toggleHabit(habit.id)}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {completed.length > 0 ? (
+                  <section
+                    aria-labelledby="completed-title"
+                    className="space-y-3"
+                  >
+                    <h2
+                      id="completed-title"
+                      className="font-heading text-base font-semibold"
+                    >
+                      Completed
+                    </h2>
+                    <ul className="space-y-3">
+                      {completed.map((habit) => (
+                        <li key={habit.id}>
+                          <HabitItem
+                            habit={habit}
+                            completed
+                            autoFocus={habit.id === focusHabitId}
+                            onToggle={() => toggleHabit(habit.id)}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                ) : null}
+              </>
+            )}
+          </div>
+
+          <div className="lg:col-start-1 lg:row-start-2">
+            <OverallProgressCard
+              stats={overallStats}
+              range={range}
+              onRangeChange={setRange}
             />
-          ) : (
-            <>
-              {pending.length === 0 ? (
-                <p className="rounded-xl bg-success/10 px-4 py-3 text-sm font-medium text-success">
-                  All done for today — nice work.
-                </p>
-              ) : (
-                <section aria-labelledby="pending-title" className="space-y-3">
-                  <h2
-                    id="pending-title"
-                    className="font-heading text-base font-semibold"
-                  >
-                    Pending
-                  </h2>
-                  <ul className="space-y-3">
-                    {pending.map((habit) => (
-                      <li key={habit.id}>
-                        <HabitItem
-                          habit={habit}
-                          completed={false}
-                          autoFocus={habit.id === focusHabitId}
-                          onToggle={() => toggleHabit(habit.id)}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
-
-              {completed.length > 0 ? (
-                <section
-                  aria-labelledby="completed-title"
-                  className="space-y-3"
-                >
-                  <h2
-                    id="completed-title"
-                    className="font-heading text-base font-semibold"
-                  >
-                    Completed
-                  </h2>
-                  <ul className="space-y-3">
-                    {completed.map((habit) => (
-                      <li key={habit.id}>
-                        <HabitItem
-                          habit={habit}
-                          completed
-                          autoFocus={habit.id === focusHabitId}
-                          onToggle={() => toggleHabit(habit.id)}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ) : null}
-            </>
-          )}
-
-          <OverallProgressCard
-            stats={overallStats}
-            range={range}
-            onRangeChange={setRange}
-          />
-        </>
+          </div>
+        </div>
       )}
     </div>
   )

@@ -32,7 +32,7 @@ export function HabitCard({ habit, onEdit, onDelete }: HabitCardProps) {
         <Icon className="size-5" />
       </span>
       <div className="min-w-0 flex-1 space-y-1">
-        <p className="truncate font-medium" title={habit.name}>
+        <p className="line-clamp-2 font-medium" title={habit.name}>
           {habit.name}
         </p>
         <ul className="flex flex-wrap gap-1">
@@ -46,11 +46,11 @@ export function HabitCard({ habit, onEdit, onDelete }: HabitCardProps) {
           ))}
         </ul>
       </div>
-      <div className="flex shrink-0 gap-1">
+      <div className="flex shrink-0 gap-2">
         <Button
           type="button"
           variant="ghost"
-          size="icon"
+          size="icon-lg"
           aria-label={`Edit ${habit.name}`}
           onClick={() => onEdit(habit)}
         >
@@ -59,7 +59,7 @@ export function HabitCard({ habit, onEdit, onDelete }: HabitCardProps) {
         <Button
           type="button"
           variant="ghost"
-          size="icon"
+          size="icon-lg"
           aria-label={`Delete ${habit.name}`}
           onClick={() => onDelete(habit)}
         >

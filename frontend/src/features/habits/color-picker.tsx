@@ -28,7 +28,7 @@ export function ColorPicker({
         role="group"
         aria-labelledby={labelId}
         aria-describedby={error ? errorId : undefined}
-        className="flex flex-wrap gap-3"
+        className="grid grid-cols-4 justify-items-center gap-3 sm:grid-cols-8"
       >
         {HABIT_COLORS.map((option) => {
           const selected = option.value === value
@@ -40,7 +40,7 @@ export function ColorPicker({
               aria-label={option.label}
               aria-pressed={selected}
               className={cn(
-                "flex size-10 items-center justify-center rounded-full transition outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                "flex size-10 items-center justify-center rounded-full transition outline-none focus-visible:ring-3 focus-visible:ring-ring",
                 selected && "ring-2 ring-foreground/50 ring-offset-2",
               )}
               style={{

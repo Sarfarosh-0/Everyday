@@ -32,7 +32,7 @@ export function DangerZone({ deleting, error, onDelete }: DangerZoneProps) {
       </h2>
       <p className="mt-1 text-sm text-muted-foreground">
         Deleting your account removes your profile, habits, and all check-in
-        history. This cannot be undone.
+        history, and starts you fresh. This cannot be undone.
       </p>
 
       {error ? (
@@ -59,7 +59,7 @@ export function DangerZone({ deleting, error, onDelete }: DangerZoneProps) {
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
         title="Delete your account?"
-        description="This removes your profile, habits, and all check-ins. This cannot be undone."
+        description="This removes your profile, habits, and all check-ins, and starts you fresh. This cannot be undone."
         confirmLabel="Delete account"
         onConfirm={() => void onDelete()}
         onCloseAutoFocus={restoreDeleteButton}

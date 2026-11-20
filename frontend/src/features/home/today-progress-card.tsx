@@ -11,25 +11,36 @@ export function TodayProgressCard({ stats }: TodayProgressCardProps) {
   return (
     <section
       aria-labelledby="today-progress-title"
-      className="rounded-xl border border-border/60 bg-card p-5"
+      className="rounded-xl border border-border/60 bg-card p-4 md:p-5"
     >
-      <h2
-        id="today-progress-title"
-        className="font-heading text-base font-semibold"
-      >
-        Today's progress
-      </h2>
-      <div className="mt-4 flex justify-center">
+      <div className="flex items-center gap-4">
         <ProgressRing
           value={percent / 100}
           label={`Today's progress: ${percent}%`}
-          size={168}
+          size={112}
+          strokeWidth={12}
         >
-          <span className="font-heading text-3xl font-semibold">{percent}%</span>
-          <span className="text-sm text-muted-foreground">
-            {stats.completed} / {stats.scheduled} done
+          <span
+            className={
+              percent === 100
+                ? "font-heading text-2xl font-semibold text-success"
+                : "font-heading text-2xl font-semibold"
+            }
+          >
+            {percent}%
           </span>
         </ProgressRing>
+        <div className="min-w-0 space-y-1">
+          <h2
+            id="today-progress-title"
+            className="font-heading text-base font-semibold"
+          >
+            Today's progress
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {stats.completed} / {stats.scheduled} done
+          </p>
+        </div>
       </div>
     </section>
   )

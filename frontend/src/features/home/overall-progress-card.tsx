@@ -48,7 +48,7 @@ export function OverallProgressCard({
                 type="button"
                 aria-pressed={selected}
                 className={cn(
-                  "flex min-h-10 min-w-10 items-center justify-center rounded-full px-3 text-xs font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50",
+                  "flex min-h-10 min-w-10 items-center justify-center rounded-full px-3 text-xs font-medium outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring",
                   selected
                     ? "bg-background text-foreground shadow-soft"
                     : "text-muted-foreground hover:text-foreground",
@@ -78,7 +78,7 @@ export function OverallProgressCard({
               style={{ width: `${completedPercent}%` }}
             />
             <div
-              className="bg-muted-foreground/30"
+              className="bg-track"
               style={{ width: `${leftPercent}%` }}
             />
           </div>
@@ -90,7 +90,7 @@ export function OverallProgressCard({
             <span className="flex items-center gap-2 text-muted-foreground">
               <span
                 aria-hidden
-                className="size-2.5 rounded-full bg-muted-foreground/30"
+                className="size-2.5 rounded-full bg-track"
               />
               {leftPercent}% left
             </span>

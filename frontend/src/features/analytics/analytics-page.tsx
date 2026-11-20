@@ -90,7 +90,7 @@ export function AnalyticsPage() {
           aria-label="Loading your analytics"
         >
           <Skeleton className="h-10 w-full rounded-full sm:w-64" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             <Skeleton className="h-[104px] rounded-xl" />
             <Skeleton className="h-[104px] rounded-xl" />
             <Skeleton className="h-[104px] rounded-xl" />
@@ -128,7 +128,7 @@ export function AnalyticsPage() {
             <h2 id="analytics-summary-title" className="sr-only">
               Summary
             </h2>
-            <dl className="grid grid-cols-2 gap-3">
+            <dl className="grid grid-cols-2 gap-3 lg:grid-cols-4">
               <StatCard
                 icon={Target}
                 label="Completion rate"
