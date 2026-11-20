@@ -269,12 +269,12 @@ function ContributionHeatmap({
 
   return (
     <div ref={scrollerRef} className="overflow-x-auto pb-1">
-      <div className="w-max">
+      <div className="w-max [--heatmap-cell:1.25rem] sm:[--heatmap-cell:0.75rem]">
         <div
           aria-hidden
           className="ml-8 grid h-3 gap-1"
           style={{
-            gridTemplateColumns: `repeat(${weeks.length}, 0.75rem)`,
+            gridTemplateColumns: `repeat(${weeks.length}, var(--heatmap-cell))`,
           }}
         >
           {monthLabels.map((label, index) => (
@@ -314,7 +314,7 @@ function ContributionHeatmap({
                   tabIndex={day.date === currentDate ? 0 : -1}
                   onFocus={() => setActiveDate(day.date)}
                   dense
-                  className="flex size-5 items-center justify-center rounded-[3px] sm:size-3"
+                  className="flex size-[var(--heatmap-cell)] items-center justify-center rounded-[3px]"
                 />
               ) : (
                 <span key={`blank-${index}`} aria-hidden />
