@@ -28,10 +28,12 @@ export function HomePage() {
   const user = useAuthStore((state) => state.user)
   const habits = useHabitsStore((state) => state.habits)
   const habitsLoading = useHabitsStore((state) => state.loading)
+  const habitsLoaded = useHabitsStore((state) => state.loaded)
   const habitsError = useHabitsStore((state) => state.error)
   const loadHabits = useHabitsStore((state) => state.loadHabits)
   const completions = useCompletionsStore((state) => state.completions)
   const completionsLoading = useCompletionsStore((state) => state.loading)
+  const completionsLoaded = useCompletionsStore((state) => state.loaded)
   const completionsError = useCompletionsStore((state) => state.error)
   const loadCompletions = useCompletionsStore((state) => state.loadCompletions)
   const toggleCompletion = useCompletionsStore(
@@ -71,6 +73,8 @@ export function HomePage() {
   )
   const loading = habitsLoading || completionsLoading
   const error = habitsError ?? completionsError
+  // A failed check-in should not replace the loaded dashboard with an error.
+  const loadFailed = Boolean(error) && (!habitsLoaded || !completionsLoaded)
 
   function retry() {
     void loadHabits(true)
@@ -102,7 +106,7 @@ export function HomePage() {
           </div>
           <Skeleton className="h-40 rounded-xl" />
         </div>
-      ) : error ? (
+      ) : loadFailed ? (
         <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4">
           <p role="alert" className="text-sm text-destructive">
             {error}
@@ -126,86 +130,106 @@ export function HomePage() {
           }
         />
       ) : (
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:items-start">
-          <div className="space-y-6 lg:col-start-1 lg:row-start-1">
-            {scheduledToday.length > 0 ? (
-              <TodayProgressCard stats={todayStats} />
-            ) : null}
+        <div className="space-y-6">
+          {error ? (
+            <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4">
+              <p role="alert" className="text-sm text-destructive">
+                {error}
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                className="mt-3"
+                onClick={retry}
+              >
+                Try again
+              </Button>
+            </div>
+          ) : null}
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:items-start">
+            <div className="space-y-6 lg:col-start-1 lg:row-start-1">
+              {scheduledToday.length > 0 ? (
+                <TodayProgressCard stats={todayStats} />
+              ) : null}
 
-            <StreakBadge streak={streak} />
-          </div>
+              <StreakBadge streak={streak} />
+            </div>
 
-          <div className="space-y-6 lg:col-start-2 lg:row-span-3 lg:row-start-1">
-            {scheduledToday.length === 0 ? (
-              <EmptyState
-                icon={CalendarX}
-                title="Nothing scheduled today"
-                description="Enjoy the rest day."
+            <div className="space-y-6 lg:col-start-2 lg:row-span-3 lg:row-start-1">
+              {scheduledToday.length === 0 ? (
+                <EmptyState
+                  icon={CalendarX}
+                  title="Nothing scheduled today"
+                  description="Enjoy the rest day."
+                />
+              ) : (
+                <>
+                  {pending.length === 0 ? (
+                    <p className="rounded-xl bg-success/10 px-4 py-3 text-sm font-medium text-success">
+                      All done for today — nice work.
+                    </p>
+                  ) : (
+                    <section
+                      aria-labelledby="pending-title"
+                      className="space-y-3"
+                    >
+                      <h2
+                        id="pending-title"
+                        className="font-heading text-base font-semibold"
+                      >
+                        Pending
+                      </h2>
+                      <ul className="space-y-3">
+                        {pending.map((habit) => (
+                          <li key={habit.id}>
+                            <HabitItem
+                              habit={habit}
+                              completed={false}
+                              autoFocus={habit.id === focusHabitId}
+                              onToggle={() => toggleHabit(habit.id)}
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
+
+                  {completed.length > 0 ? (
+                    <section
+                      aria-labelledby="completed-title"
+                      className="space-y-3"
+                    >
+                      <h2
+                        id="completed-title"
+                        className="font-heading text-base font-semibold"
+                      >
+                        Completed
+                      </h2>
+                      <ul className="space-y-3">
+                        {completed.map((habit) => (
+                          <li key={habit.id}>
+                            <HabitItem
+                              habit={habit}
+                              completed
+                              autoFocus={habit.id === focusHabitId}
+                              onToggle={() => toggleHabit(habit.id)}
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ) : null}
+                </>
+              )}
+            </div>
+
+            <div className="lg:col-start-1 lg:row-start-2">
+              <OverallProgressCard
+                stats={overallStats}
+                range={range}
+                onRangeChange={setRange}
               />
-            ) : (
-              <>
-                {pending.length === 0 ? (
-                  <p className="rounded-xl bg-success/10 px-4 py-3 text-sm font-medium text-success">
-                    All done for today — nice work.
-                  </p>
-                ) : (
-                  <section aria-labelledby="pending-title" className="space-y-3">
-                    <h2
-                      id="pending-title"
-                      className="font-heading text-base font-semibold"
-                    >
-                      Pending
-                    </h2>
-                    <ul className="space-y-3">
-                      {pending.map((habit) => (
-                        <li key={habit.id}>
-                          <HabitItem
-                            habit={habit}
-                            completed={false}
-                            autoFocus={habit.id === focusHabitId}
-                            onToggle={() => toggleHabit(habit.id)}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                )}
-
-                {completed.length > 0 ? (
-                  <section
-                    aria-labelledby="completed-title"
-                    className="space-y-3"
-                  >
-                    <h2
-                      id="completed-title"
-                      className="font-heading text-base font-semibold"
-                    >
-                      Completed
-                    </h2>
-                    <ul className="space-y-3">
-                      {completed.map((habit) => (
-                        <li key={habit.id}>
-                          <HabitItem
-                            habit={habit}
-                            completed
-                            autoFocus={habit.id === focusHabitId}
-                            onToggle={() => toggleHabit(habit.id)}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ) : null}
-              </>
-            )}
-          </div>
-
-          <div className="lg:col-start-1 lg:row-start-2">
-            <OverallProgressCard
-              stats={overallStats}
-              range={range}
-              onRangeChange={setRange}
-            />
+            </div>
           </div>
         </div>
       )}
