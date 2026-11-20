@@ -134,7 +134,11 @@ export function Heatmap({
 
       <div className="mt-4">
         {range === "year" ? (
-          <ContributionHeatmap days={heatmapDays} onSelectDay={onSelectDay} />
+          <ContributionHeatmap
+            days={heatmapDays}
+            todayKey={todayKey}
+            onSelectDay={onSelectDay}
+          />
         ) : (
           <CalendarHeatmap days={heatmapDays} onSelectDay={onSelectDay} />
         )}
@@ -218,9 +222,11 @@ function CalendarHeatmap({
 
 function ContributionHeatmap({
   days,
+  todayKey,
   onSelectDay,
 }: {
   days: HeatmapDay[]
+  todayKey: string
   onSelectDay: (date: string) => void
 }) {
   const leadingBlanks =
@@ -234,11 +240,18 @@ function ContributionHeatmap({
   const { containerRef, currentDate, setActiveDate, onKeyDown } =
     useRovingFocus(days, "contribution")
 
-  // The current year's activity sits at the right edge; show it first.
+  // Start with today at the right edge instead of the future months.
   useEffect(() => {
     const scroller = scrollerRef.current
-    if (scroller) scroller.scrollLeft = scroller.scrollWidth
-  }, [])
+    const todayCell = scroller?.querySelector<HTMLElement>(
+      `[data-date="${todayKey}"]`,
+    )
+    if (!scroller || !todayCell) return
+
+    scroller.scrollLeft +=
+      todayCell.getBoundingClientRect().right -
+      scroller.getBoundingClientRect().right
+  }, [todayKey])
 
   const monthLabels = weeks.map((week, index) => {
     const first = week.find((cell): cell is HeatmapDay => cell !== null)
