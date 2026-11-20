@@ -41,7 +41,8 @@ export function ColorPicker({
               aria-pressed={selected}
               className={cn(
                 "flex size-10 items-center justify-center rounded-full transition outline-none focus-visible:ring-3 focus-visible:ring-ring",
-                selected && "ring-2 ring-foreground/50 ring-offset-2",
+                selected &&
+                  "ring-2 ring-foreground/50 ring-offset-2 ring-offset-background",
               )}
               style={{
                 backgroundColor: option.value,
