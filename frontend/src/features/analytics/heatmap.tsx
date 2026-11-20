@@ -30,6 +30,17 @@ const KEY_DELTAS = {
   contribution: { ArrowLeft: -7, ArrowRight: 7, ArrowUp: -1, ArrowDown: 1 },
 }
 
+function periodLabel(range: AnalyticsRange, days: string[]): string {
+  if (days.length === 0) return ""
+
+  const start = parseDateKey(days[0])
+  const end = parseDateKey(days[days.length - 1])
+
+  if (range === "year") return format(start, "yyyy")
+  if (range === "month") return format(start, "MMMM yyyy")
+  return `${format(start, "d MMM")} – ${format(end, "d MMM yyyy")}`
+}
+
 type HeatmapOrientation = keyof typeof KEY_DELTAS
 
 /**
@@ -47,7 +58,10 @@ function useRovingFocus(days: HeatmapDay[], orientation: HeatmapOrientation) {
     return null
   }, [days])
 
-  const currentDate = activeDate ?? defaultDate
+  // Keep one valid tab stop when the range changes and the old day is gone.
+  const currentDate = days.some((day) => day.date === activeDate)
+    ? activeDate
+    : defaultDate
 
   function focusDate(date: string | undefined) {
     if (!date) return
@@ -121,9 +135,17 @@ export function Heatmap({
       className="rounded-xl border border-border/60 bg-card p-4 sm:p-5"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 id="heatmap-title" className="font-heading text-base font-semibold">
-          Consistency
-        </h2>
+        <div>
+          <h2
+            id="heatmap-title"
+            className="font-heading text-base font-semibold"
+          >
+            Consistency
+          </h2>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            {periodLabel(range, days)}
+          </p>
+        </div>
         <p className="text-xs text-muted-foreground">
           Select a day for details.
         </p>
@@ -131,7 +153,11 @@ export function Heatmap({
 
       <div className="mt-4">
         {range === "year" ? (
-          <ContributionHeatmap days={heatmapDays} onSelectDay={onSelectDay} />
+          <ContributionHeatmap
+            days={heatmapDays}
+            todayKey={todayKey}
+            onSelectDay={onSelectDay}
+          />
         ) : (
           <CalendarHeatmap days={heatmapDays} onSelectDay={onSelectDay} />
         )}
@@ -215,9 +241,11 @@ function CalendarHeatmap({
 
 function ContributionHeatmap({
   days,
+  todayKey,
   onSelectDay,
 }: {
   days: HeatmapDay[]
+  todayKey: string
   onSelectDay: (date: string) => void
 }) {
   const leadingBlanks =
@@ -231,11 +259,18 @@ function ContributionHeatmap({
   const { containerRef, currentDate, setActiveDate, onKeyDown } =
     useRovingFocus(days, "contribution")
 
-  // The current year's activity sits at the right edge; show it first.
+  // Start with today at the right edge instead of the future months.
   useEffect(() => {
     const scroller = scrollerRef.current
-    if (scroller) scroller.scrollLeft = scroller.scrollWidth
-  }, [])
+    const todayCell = scroller?.querySelector<HTMLElement>(
+      `[data-date="${todayKey}"]`,
+    )
+    if (!scroller || !todayCell) return
+
+    scroller.scrollLeft +=
+      todayCell.getBoundingClientRect().right -
+      scroller.getBoundingClientRect().right
+  }, [todayKey])
 
   const monthLabels = weeks.map((week, index) => {
     const first = week.find((cell): cell is HeatmapDay => cell !== null)
@@ -253,12 +288,12 @@ function ContributionHeatmap({
 
   return (
     <div ref={scrollerRef} className="overflow-x-auto pb-1">
-      <div className="w-max">
+      <div className="w-max [--heatmap-cell:1.25rem] sm:[--heatmap-cell:0.75rem]">
         <div
           aria-hidden
           className="ml-8 grid h-3 gap-1"
           style={{
-            gridTemplateColumns: `repeat(${weeks.length}, 0.75rem)`,
+            gridTemplateColumns: `repeat(${weeks.length}, var(--heatmap-cell))`,
           }}
         >
           {monthLabels.map((label, index) => (
@@ -298,7 +333,7 @@ function ContributionHeatmap({
                   tabIndex={day.date === currentDate ? 0 : -1}
                   onFocus={() => setActiveDate(day.date)}
                   dense
-                  className="flex size-5 items-center justify-center rounded-[3px] sm:size-3"
+                  className="flex size-[var(--heatmap-cell)] items-center justify-center rounded-[3px]"
                 />
               ) : (
                 <span key={`blank-${index}`} aria-hidden />

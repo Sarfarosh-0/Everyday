@@ -42,7 +42,7 @@ export function WeekdayPicker({
             type="button"
             variant="ghost"
             size="sm"
-            className="min-h-10"
+            className="min-h-11"
             onClick={() => onChange([...EVERY_DAY])}
           >
             Every day
@@ -51,7 +51,7 @@ export function WeekdayPicker({
             type="button"
             variant="ghost"
             size="sm"
-            className="min-h-10"
+            className="min-h-11"
             onClick={() => onChange([...WEEKDAYS])}
           >
             Weekdays
@@ -76,7 +76,7 @@ export function WeekdayPicker({
               aria-label={option.label}
               aria-pressed={selected}
               className={cn(
-                "px-0",
+                "h-11 px-0",
                 selected && "border-primary bg-primary/10 text-primary",
               )}
               onClick={() => toggle(option.value)}

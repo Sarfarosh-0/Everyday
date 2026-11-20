@@ -28,7 +28,7 @@ export function ThemeToggle() {
             aria-label={`${option.label} theme`}
             title={`${option.label} theme`}
             className={cn(
-              "flex size-10 items-center justify-center rounded-full outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring",
+              "flex size-11 items-center justify-center rounded-full outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring",
               selected
                 ? "bg-background text-foreground shadow-soft"
                 : "text-muted-foreground hover:text-foreground",
