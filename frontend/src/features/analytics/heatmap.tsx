@@ -47,7 +47,10 @@ function useRovingFocus(days: HeatmapDay[], orientation: HeatmapOrientation) {
     return null
   }, [days])
 
-  const currentDate = activeDate ?? defaultDate
+  // Keep one valid tab stop when the range changes and the old day is gone.
+  const currentDate = days.some((day) => day.date === activeDate)
+    ? activeDate
+    : defaultDate
 
   function focusDate(date: string | undefined) {
     if (!date) return
