@@ -29,7 +29,8 @@ export function ProfileCard({ user }: ProfileCardProps) {
       <div className="min-w-0 space-y-1">
         <h2
           id="profile-title"
-          className="truncate font-heading text-xl font-semibold"
+          title={user.name}
+          className="line-clamp-2 font-heading text-xl font-semibold"
         >
           {user.name}
         </h2>
