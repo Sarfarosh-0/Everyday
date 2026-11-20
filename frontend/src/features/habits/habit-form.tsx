@@ -99,14 +99,14 @@ export function HabitForm({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         onCloseAutoFocus={onCloseAutoFocus}
-        className="top-0 left-0 h-svh max-w-none translate-x-0 translate-y-0 gap-0 rounded-none p-0 sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-h-[90vh] sm:max-w-md sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl"
+        className="top-0 left-0 flex h-svh max-w-none translate-x-0 translate-y-0 flex-col gap-0 overflow-hidden rounded-none p-0 sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-h-[90vh] sm:max-w-md sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl"
       >
         <form
           noValidate
           onSubmit={handleSubmit(onSubmit)}
-          className="flex h-full min-h-0 flex-col"
+          className="flex min-h-0 w-full flex-1 flex-col"
         >
-          <div className="space-y-1 border-b px-4 py-4 sm:px-6">
+          <div className="shrink-0 space-y-1 border-b px-4 py-4 sm:px-6">
             <DialogTitle className="text-lg">
               {habit ? "Edit habit" : "New habit"}
             </DialogTitle>
@@ -176,7 +176,7 @@ export function HabitForm({
             ) : null}
           </div>
 
-          <div className="flex gap-2 border-t bg-muted/50 px-4 py-4 sm:justify-end sm:px-6">
+          <div className="flex shrink-0 gap-2 border-t bg-muted/50 px-4 py-4 sm:justify-end sm:px-6">
             <Button
               type="button"
               variant="outline"
