@@ -30,6 +30,17 @@ const KEY_DELTAS = {
   contribution: { ArrowLeft: -7, ArrowRight: 7, ArrowUp: -1, ArrowDown: 1 },
 }
 
+function periodLabel(range: AnalyticsRange, days: string[]): string {
+  if (days.length === 0) return ""
+
+  const start = parseDateKey(days[0])
+  const end = parseDateKey(days[days.length - 1])
+
+  if (range === "year") return format(start, "yyyy")
+  if (range === "month") return format(start, "MMMM yyyy")
+  return `${format(start, "d MMM")} – ${format(end, "d MMM yyyy")}`
+}
+
 type HeatmapOrientation = keyof typeof KEY_DELTAS
 
 /**
@@ -124,9 +135,17 @@ export function Heatmap({
       className="rounded-xl border border-border/60 bg-card p-4 sm:p-5"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 id="heatmap-title" className="font-heading text-base font-semibold">
-          Consistency
-        </h2>
+        <div>
+          <h2
+            id="heatmap-title"
+            className="font-heading text-base font-semibold"
+          >
+            Consistency
+          </h2>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            {periodLabel(range, days)}
+          </p>
+        </div>
         <p className="text-xs text-muted-foreground">
           Select a day for details.
         </p>
